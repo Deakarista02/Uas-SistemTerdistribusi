@@ -1,0 +1,28 @@
+version: '3'
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8000:9000"
+    volumes:
+      - .:/var/www/html
+    networks:
+      - laravel-network
+    depends_on:
+      - mysql
+
+  mysql:
+    image: mysql:5.7
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_DATABASE: uas-sister
+      MYSQL_ROOT_PASSWORD: root
+    networks:
+      - laravel-network
+
+networks:
+  laravel-network:
+    driver: bridge
